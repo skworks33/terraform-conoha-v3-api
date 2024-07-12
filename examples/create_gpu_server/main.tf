@@ -38,14 +38,14 @@ data "openstack_images_image_v2" "image" {
 # https://registry.terraform.io/providers/terraform-provider-openstack/openstack/latest/docs/resources/blockstorage_volume_v3
 resource "openstack_blockstorage_volume_v3" "volume" {
   name = var.boot_volume_name
-  size = 100 # 1GBプラン以上は100GB, 512MBプランは30GB固定
+  size = 100
   image_id = data.openstack_images_image_v2.image.id
   volume_type = var.boot_volume_type_name
 }
 
 # ユーザーデータ取得
 data "template_file" "user_data" {
-  template = file("${path.module}/files/user_data.tpl")
+  template = file("${path.module}/../../files/user_data.tpl")
   vars = {
     hostname = var.instance_name
   }

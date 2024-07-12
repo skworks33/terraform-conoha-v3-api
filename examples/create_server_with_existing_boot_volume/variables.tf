@@ -31,17 +31,12 @@ variable "default_security_group" {
 
 variable "flavor_name" {
   description = "The name of the flavor to be used for the instance."
-  default     = "g2l-t-c2m1" # 2vCPU, 1GB RAM, 100GB Disk
+  default     = "g2l-t-c20m128g1-l4" # 20vCPU, 128GB RAM, 100GB Disk, NVIDIA L4 GPU
 }
 
 variable "image_name" {
   description = "The name of the image to be used for the instance."
   default     = "vmi-ubuntu-22.04-amd64"
-}
-
-variable "boot_volume_name" {
-  description = "The name of the boot volume to be used for the instance."
-  default     = "your-terraform-boot-volume-name"
 }
 
 variable "boot_volume_type_name" {
@@ -58,3 +53,6 @@ variable "instance_root_password" {
   description = "The root password of the instance to be created."
 }
 
+variable "boot_volume_name" {
+  description = "The name of the existing boot volume to be used for the instance."
+}

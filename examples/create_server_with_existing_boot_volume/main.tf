@@ -33,19 +33,15 @@ data "openstack_images_image_v2" "image" {
   most_recent = true
 }
 
-# ブートボリューム作成
-# https://doc.conoha.jp/api-vps3/volume-create_vol-v3
-# https://registry.terraform.io/providers/terraform-provider-openstack/openstack/latest/docs/resources/blockstorage_volume_v3
-resource "openstack_blockstorage_volume_v3" "volume" {
+# 既存のブートボリュームを取得
+# 注意: ConoHaでは同一名で複数のボリュームを作成できますが terraform-provider-openstack では名前で一意に特定するため、同一名のボリュームが複数ある場合はエラーになります
+data "openstack_blockstorage_volume_v3" "existing_boot_volume" {
   name = var.boot_volume_name
-  size = 100 # 1GBプラン以上は100GB, 512MBプランは30GB固定
-  image_id = data.openstack_images_image_v2.image.id
-  volume_type = var.boot_volume_type_name
 }
 
 # ユーザーデータ取得
 data "template_file" "user_data" {
-  template = file("${path.module}/files/user_data.tpl")
+  template = file("${path.module}/../../files/user_data.tpl")
   vars = {
     hostname = var.instance_name
   }
@@ -68,14 +64,13 @@ resource "openstack_compute_instance_v2" "instance" {
   user_data = data.template_file.user_data.rendered
 
   block_device {
-    uuid = openstack_blockstorage_volume_v3.volume.id
+    uuid = data.openstack_blockstorage_volume_v3.existing_boot_volume.id
     source_type = "volume"
     destination_type = "volume"
     # boot_index は ConoHa 側で自動設定される
   }
 
   depends_on = [
-    openstack_compute_keypair_v2.keypair,
-    openstack_blockstorage_volume_v3.volume
+    openstack_compute_keypair_v2.keypair
   ]
 }
