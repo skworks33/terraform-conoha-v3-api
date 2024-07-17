@@ -31,7 +31,7 @@ variable "default_security_group" {
 
 variable "flavor_name" {
   description = "The name of the flavor to be used for the instance."
-  default     = "g2l-t-c20m128g1-l4" # 20vCPU, 128GB RAM, 100GB Disk, NVIDIA L4 GPU
+  default     = "g2l-t-c2m1" # 2vCPU, 1GB RAM, 100GB Disk
 }
 
 variable "image_name" {
