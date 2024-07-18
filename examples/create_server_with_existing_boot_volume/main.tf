@@ -27,12 +27,6 @@ data "openstack_compute_flavor_v2" "flavor" {
   name = var.flavor_name
 }
 
-# イメージID取得
-data "openstack_images_image_v2" "image" {
-  name        = var.image_name
-  most_recent = true
-}
-
 # 既存のブートボリュームを取得
 # 注意: ConoHaでは同一名で複数のボリュームを作成できますが terraform-provider-openstack では名前で一意に特定するため、同一名のボリュームが複数ある場合はエラーになります
 data "openstack_blockstorage_volume_v3" "existing_boot_volume" {

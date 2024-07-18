@@ -34,11 +34,6 @@ variable "flavor_name" {
   default     = "g2l-t-c2m1" # 2vCPU, 1GB RAM, 100GB Disk
 }
 
-variable "image_name" {
-  description = "The name of the image to be used for the instance."
-  default     = "vmi-ubuntu-22.04-amd64"
-}
-
 variable "boot_volume_type_name" {
   description = "The name of the boot volume type to be used for the instance. Documented at https://doc.conoha.jp/api-vps3/volume-get_types_list-v3/"
   default     = "c3j1-ds02-boot"
