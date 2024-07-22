@@ -43,6 +43,26 @@ resource "openstack_blockstorage_volume_v3" "volume" {
   volume_type = var.boot_volume_type_name
 }
 
+# セキュリティグループ作成の例
+# https://doc.conoha.jp/api-vps3/network-create_secgps-v3/
+# https://registry.terraform.io/providers/terraform-provider-openstack/openstack/latest/docs/resources/networking_secgroup_v2
+resource "openstack_networking_secgroup_v2" "secgroup" {
+  name        = "test-secgroup"
+  description = "Test security group"
+}
+
+# セキュリティグループルール作成の例
+# https://doc.conoha.jp/api-vps3/network-create_secgprule-v3/
+# https://registry.terraform.io/providers/terraform-provider-openstack/openstack/latest/docs/resources/networking_secgroup_rule_v2
+resource "openstack_networking_secgroup_rule_v2" "ipv4_tcp_80" {
+  direction         = "ingress"
+  ethertype         = "IPv4"
+  protocol          = "tcp"
+  port_range_min    = 80
+  port_range_max    = 80
+  security_group_id = openstack_networking_secgroup_v2.secgroup.id
+}
+
 # ユーザーデータ取得
 data "template_file" "user_data" {
   template = file("${path.module}/files/user_data.tpl")
@@ -59,7 +79,8 @@ resource "openstack_compute_instance_v2" "instance" {
   flavor_id = data.openstack_compute_flavor_v2.flavor.id
   key_pair = openstack_compute_keypair_v2.keypair.name
   security_groups = [
-    var.default_security_group
+    var.default_security_group, # 既存のセキュリティグループを参照する例 (ConoHa側で用意されているセキュリティグループを利用する場合など)
+    openstack_networking_secgroup_v2.secgroup.name # 本スクリプトで作成したセキュリティグループを参照する例
   ]
   admin_pass = var.instance_root_password # 未指定時はランダムパスワードが設定される
   metadata = {
@@ -76,6 +97,7 @@ resource "openstack_compute_instance_v2" "instance" {
 
   depends_on = [
     openstack_compute_keypair_v2.keypair,
+    openstack_networking_secgroup_v2.secgroup,
     openstack_blockstorage_volume_v3.volume
   ]
 }
