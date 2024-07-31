@@ -16,7 +16,7 @@ provider "openstack" {
   password    = var.conoha_v3_password
 }
 
-# イメージID取得 (既存のプライベートイメージからボリュームを作成する場合に利用)
+# イメージID取得 (保存イメージからボリュームを作成する場合に利用)
 # data "openstack_images_image_v2" "image" {
 #   name        = var.private_image_name
 #   most_recent = true
@@ -28,6 +28,6 @@ provider "openstack" {
 resource "openstack_blockstorage_volume_v3" "additional_volume" {
   name = var.additional_volume_name
   size = 200 # 200, 500, 1000, 5000, 10000 から選択
-  # image_id = data.openstack_images_image_v2.image.id # 既存のプライベートイメージからボリュームを作成する場合に指定
+  # image_id = data.openstack_images_image_v2.image.id # 保存イメージからボリュームを作成する場合に指定
   volume_type = var.additional_volume_type_name
 }
