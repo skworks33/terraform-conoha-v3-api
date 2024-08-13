@@ -8,4 +8,3 @@ mounts:
   - ["/dev/vdb", "${mount_point}", "ext4", "defaults", 0, 0]
 runcmd:
   - mkfs.ext4 /dev/vdb
-  - mount /dev/vdb ${mount_point}
