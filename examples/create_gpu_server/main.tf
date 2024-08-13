@@ -45,7 +45,7 @@ resource "openstack_blockstorage_volume_v3" "volume" {
 
 # ユーザーデータ取得
 data "template_file" "user_data" {
-  template = file("${path.module}/../../files/user_data.tpl")
+  template = file("${path.module}/../../files/user_data/set_hostname.tpl")
   vars = {
     hostname = var.instance_name
   }

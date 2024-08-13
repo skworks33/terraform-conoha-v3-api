@@ -65,7 +65,7 @@ resource "openstack_networking_secgroup_rule_v2" "ipv4_tcp_80" {
 
 # ユーザーデータ取得
 data "template_file" "user_data" {
-  template = file("${path.module}/files/user_data.tpl")
+  template = file("${path.module}/files/user_data/set_hostname.tpl")
   vars = {
     hostname = var.instance_name
   }

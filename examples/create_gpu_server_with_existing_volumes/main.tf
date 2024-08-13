@@ -41,9 +41,9 @@ data "openstack_blockstorage_volume_v3" "existing_additional_volume" {
 
 # ユーザーデータ取得
 data "template_file" "user_data" {
-  template = file("${path.module}/../../files/user_data.tpl")
+  template = file("${path.module}/../../files/user_data/attach_additional_volume.tpl")
   vars = {
-    hostname = var.instance_name
+    mount_point = var.mount_point
   }
 }
 

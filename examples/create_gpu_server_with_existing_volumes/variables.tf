@@ -53,3 +53,8 @@ variable "instance_root_password" {
   description = "The root password of the instance to be created."
 }
 
+variable "mount_point" {
+  description = "The mount point for the additional disk"
+  type        = string
+  default     = "/mnt"
+}
