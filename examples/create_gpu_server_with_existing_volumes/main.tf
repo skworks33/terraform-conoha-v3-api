@@ -50,7 +50,7 @@ data "template_file" "user_data" {
 # インスタンス作成
 # https://doc.conoha.jp/api-vps3/compute-create_vm-v3/
 # https://registry.terraform.io/providers/terraform-provider-openstack/openstack/latest/docs/resources/compute_instance_v2
-resource "openstack_compute_instance_v2" "instance" {
+resource "openstack_compute_instance_v2" "gpu_server_01" {
   name = var.instance_name
   flavor_id = data.openstack_compute_flavor_v2.flavor.id
   key_pair = openstack_compute_keypair_v2.keypair.name
