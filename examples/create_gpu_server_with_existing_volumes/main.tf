@@ -63,7 +63,7 @@ resource "openstack_compute_instance_v2" "gpu_server_01" {
   }
   user_data = data.template_file.user_data.rendered
 
-  # ブートディスクをアタッチ
+  # ブートボリュームをアタッチ
   block_device {
     uuid = data.openstack_blockstorage_volume_v3.existing_boot_volume.id
     source_type = "volume"
@@ -71,7 +71,7 @@ resource "openstack_compute_instance_v2" "gpu_server_01" {
     # boot_index は ConoHa 側で自動設定される
   }
 
-  # 追加ディスクをアタッチ
+  # 追加用ボリューム(追加ディスク)をアタッチ
   block_device {
     uuid = data.openstack_blockstorage_volume_v3.existing_additional_volume.id
     source_type = "volume"

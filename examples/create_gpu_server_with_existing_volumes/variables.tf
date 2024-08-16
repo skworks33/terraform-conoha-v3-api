@@ -54,7 +54,7 @@ variable "instance_root_password" {
 }
 
 variable "mount_point" {
-  description = "The mount point for the additional disk"
+  description = "The mount point for the additional volume."
   type        = string
   default     = "/mnt"
 }
