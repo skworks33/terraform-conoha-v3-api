@@ -4,7 +4,7 @@
 
 ## 概要
 
-このリポジトリは、Terraformを使用して[ConoHa VPS API (v3)](https://doc.conoha.jp/api-vps3/)を操作するためのサンプルコードと設定ファイルを提供します。
+このリポジトリは、Terraformを使用して[ConoHa VPS Ver.3.0](https://doc.conoha.jp/api-vps3/)のAPIを操作するためのサンプルコードと設定ファイルを提供します。
 
 ConoHaのクラウドサービスに対応するインフラストラクチャをコードで管理し、自動化するための具体的な手順を含んでいます。
 
@@ -215,4 +215,4 @@ output=$(openstack flavor list); echo "$output" | head -n 3; echo "$output" | gr
 ## 参考資料
 
 - [Terraform公式ドキュメント](https://www.terraform.io/docs/index.html)
-- [ConoHa VPS API (v3) ドキュメント](https://doc.conoha.jp/api-vps3/)
+- [ConoHa VPS Ver.3.0 APIドキュメント](https://doc.conoha.jp/api-vps3/)
